@@ -134,7 +134,16 @@ bastion policy-preset -f csv
 # 6. Interactive offline help and full UNIX manual page
 bastion help                             # Interactive topic directory
 bastion help lenses                      # Deep dive into the 5 operational lenses
+bastion help airspace                    # Guide to wireless adapter reconnaissance & RF sweeps
 bastion man                              # Full UNIX man page rendered via $PAGER
+
+# 7. Sovereign Airspace & Wi-Fi Tactical Radar
+bastion airspace                         # Interactive airspace overview & hardware auto-discovery
+bastion airspace adapters                # Inspect discovered wireless interfaces, chipsets & roles
+bastion airspace scan                    # Multi-channel hopping RF survey (1, 6, 11, 36, 40...)
+bastion airspace scan -c 36 --duration 10 # Single-channel locked high-fidelity RF capture
+bastion airspace audit 78:67:0e:ba:7e:76 # Audit 802.11w PMF, beacon intervals & WPA3 enforcement
+bastion airspace dashboard               # Launch sovereign Ratatui radar dashboard matrix
 ```
 
 ### 4 Interchange Formats & 5 Operational Lenses
@@ -152,6 +161,7 @@ Bastion supports universal structured projections across all query and telemetry
 * [04. XDP Packet Shield & SYN Cookies](docs/04_BASTION_GUIDE_XDP_AND_FIREWALL_STRATEGY.md) — In-kernel eBPF data path, Katran ARX 30-bit SYN Cookies, Bogon/LAND wire drops, and volumetric flood limiters.
 * [05. Tactical Scanner & Passive Recon](docs/05_BASTION_GUIDE_TACTICAL_SCANNER_AND_RECON.md) — Adaptive EWMA RTT timing, RFC 793/7323 TCP options crafting, passive OS stack fingerprinting, and ANSI log scrubbing.
 * [06. Crucible Empirical Security Audit](docs/06_BASTION_GUIDE_CRUCIBLE_EMPIRICAL_AUDIT.md) — Empirical verification proof across all 360+ tests and defended threat models.
+* [07. Airspace Reconnaissance & Wire Crucibles](docs/07_BASTION_GUIDE_AIRSPACE_AND_WIRE_CRUCIBLE.md) — IEEE 802.11/802.1X zero-copy dissectors, PMF 802.11w auditing, zero-client PMKID extraction, and wire fuzz crucibles.
 * [Changelog](CHANGELOG.md) — Detailed engineer-to-engineer release history and architectural root cause analyses.
 
 ---

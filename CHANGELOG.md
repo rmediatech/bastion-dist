@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.5.0] - 2026-11-11
+
+### Wire-Level RFC 802.11/802.1X Dissectors & Adversarial Crucibles (`SOVEREIGN-CHANGELOG-E2E-01`)
+
+- **`[CLI/UX]` & `[Protocol]` Unified `bastion airspace` Command Suite (`cli::airspace_runner`, `cli::airspace_ops`, `cli::airspace_render`, `cli::airspace_help`)**:
+  - **Root Cause Dissection**: Operators previously lacked a unified, user-friendly CLI command surface for wireless reconnaissance and 802.11w Protected Management Frames (PMF) security audits. Running manual sweeps required knowing obscure interface flags, and monitor mode setup frequently failed with `libpcap` errors when operating on interfaces already placed in monitor state.
+  - **Architectural & Mathematical Resolution**: Engineered the `bastion airspace` command tree featuring `adapters`, `scan`, `audit`, `dashboard`, and `deauth`. Implemented automatic fallback from `.rfmon(true)` to `.promisc(true)` for pre-configured monitor interfaces. Added interactive ASCII adapter inspection, multi-channel hopping vs single-channel locking flags, and structured output formatting (`tui`, `md`, `json`). Modularized the CLI runner into `airspace_runner.rs` (162 lines) and `airspace_ops.rs` (199 lines) to strictly enforce the `<= 300` line invariant.
+  - **Empirical Verification**: Empirically validated across local wireless hardware adapters and verified via CLI projection tests (`cli/tests/cli_tests.rs::test_airspace_render_scan_and_audit` and `test_airspace_help_and_topic`).
+
+- **`[Protocol]` & `[Crucible/TDD]` RFC 802.11-2020 & IEEE 802.1X-2020 EAPOL Zero-Copy Dissectors (`airspace::wifi::mac_frame`, `airspace::wifi::eapol`)**:
+  - **Root Cause Dissection**: Legacy handshake detection relied on an arbitrary sliding window search (`frame.windows(8)`) looking for LLC/SNAP bytes, failing to parse true IEEE 802.11 MAC headers, ToDS/FromDS distribution address mapping, or 802.1X EAPOL-Key state machines. This risked false positives from payload collisions and could not distinguish handshake message ordering or extract zero-client PMKID elements.
+  - **Architectural & Mathematical Resolution**: Implemented zero-copy RFC dissectors adhering strictly to IEEE 802.11-2020 §9.2.4 and IEEE 802.1X-2020 §11:
+    1. `mac_frame`: Dissects 802.11 Frame Control, resolves 4-address multiplexing (IBSS, Station-to-AP, AP-to-Station, and WDS), and skips variable QoS Control and HT Control fields before validating RFC 1042 LLC/SNAP headers (`0xAA 0xAA 0x03 0x00 0x00 0x00 0x88 0x8E`).
+    2. `eapol`: Dissects 802.1X EAPOL-Key frames (min 95B base), parses Key Information bitmasks (Pairwise/Group, Install, Key ACK, Key MIC, Secure), extracts 32-byte nonces (ANonce/SNonce) and 16-byte MICs, and navigates Vendor Specific Key Data Elements (`Type 0xDD`, `OUI 00-0F-AC`, `DataType 0x04`) to extract zero-client PMKIDs.
+    3. `HandshakeTracker`: State machine verifying Replay Counter synchronization between Msg 1 and Msg 2, accurately classifying crackable captures.
+  - **Empirical Verification**: Verified via 6-vector adversarial crucible (`airspace/tests/adversarial_eapol_rfc_crucible.rs`) covering truncated header containment, 64KB allocation bombs, PMKID extraction, replay attack rejection, ToDS/FromDS address resolution, and 10,000 randomized mutated frames with 0 panics.
+
+- **`[Crucible/TDD]` Wire-Level RFC Fuzz Crucible & Dynamic Binary Resolution (`airspace`, `airspace_lab`)**:
+  - **Root Cause Dissection**: Wireless frame dissection previously lacked dedicated fuzzing against malformed Information Elements (IEs) and ANSI terminal poisoning. Additionally, `airspace_lab` relied on brittle relative process execution paths (`./target/release/scan`), failing when executed from arbitrary working directories.
+  - **Architectural & Mathematical Resolution**: Created `airspace/tests/adversarial_wire_fuzz_tests.rs` (testing truncated frames, 65,535 pairwise suite allocation bombs, ANSI escape code scrubbing, and 10,000 mutated frames). Engineered `airspace_lab::labutils::proc_resolve` dynamically discovering companion binaries via `current_exe()` parent directory, relative development paths, and system `PATH`. Sanitized `airspace_lab/src/bin/poc_airspace.rs` of all hardcoded physical MAC addresses.
+  - **Empirical Verification**: 100% green test suite across all 14 workspace crates (395+ tests passed).
+
+---
+
 ## [1.4.0] - 2026-11-10
 
 ### Sovereign Help, UNIX Man Page, 4 Formats & 5 Operational Lenses (`SOVEREIGN-CHANGELOG-E2E-01`)
