@@ -59,7 +59,7 @@ let fd = unsafe { libc::socket(libc::AF_NETLINK, libc::SOCK_RAW, libc::NETLINK_G
 ```
 
 1. **Kernel Controller Resolution**: Resolves the dynamic `nl80211` family ID at runtime via `CTRL_CMD_GETFAMILY` over Netlink.
-2. **Channel Frequency Switching**: Executes `NL80211_CMD_SET_CHANNEL` with `NL80211_ATTR_WIPHY_FREQ` directly, achieving channel hopping in $<120\mu\text{s}$.
+2. **Channel Frequency Switching**: Executes `NL80211_CMD_SET_CHANNEL` with `NL80211_ATTR_WIPHY_FREQ` directly, achieving channel hopping in `< 120µs`.
 3. **Bare-Metal Interface State Transitions**: Toggles interface states (`IFF_UP`, `IFF_PROMISC`) using direct `libc::ioctl` calls with `SIOCGIFFLAGS` and `SIOCSIFFLAGS`, completely bypassing legacy utilities.
 
 ---
@@ -69,4 +69,4 @@ let fd = unsafe { libc::socket(libc::AF_NETLINK, libc::SOCK_RAW, libc::NETLINK_G
 In strict compliance with our Universal Sovereign Engineering Standard:
 * **Zero Child Processes**: Bastion never calls `std::process::Command::new("ip")`, `Command::new("iw")`, or `Command::new("kill")`.
 * **Direct Syscall Interception**: Process terminations, signaling, and timeouts execute via native POSIX `libc::kill` (with `SIGTERM` followed by atomic grace checks).
-* **Memory Bounded Modularity**: All source modules conform to single-responsibility bounds ($\le 300$ lines), with clean abstractions between state tracking, packet forging, and kernel interaction.
+* **Memory Bounded Modularity**: All source modules conform to single-responsibility bounds (`<= 300` lines), with clean abstractions between state tracking, packet forging, and kernel interaction.

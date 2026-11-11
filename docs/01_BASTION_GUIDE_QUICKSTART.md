@@ -85,7 +85,7 @@ bastion help
 # Deep-dive into operational lenses
 bastion help lenses
 
-# Full UNIX manual page (renders through your active $PAGER)
+# Full UNIX manual page (renders through your active `$PAGER`)
 bastion man
 ```
 
@@ -102,7 +102,7 @@ bastion block --ip 198.51.100.42
 bastion unblock --ip 198.51.100.42
 ```
 
-The daemon updates entries in the in-kernel `IP_BLOCKLIST` eBPF map in $<15\mu\text{s}$, dropping incoming packets at wire speed before Linux allocates socket buffers.
+The daemon updates entries in the in-kernel `IP_BLOCKLIST` eBPF map in `< 15µs`, dropping incoming packets at wire speed before Linux allocates socket buffers.
 
 ---
 

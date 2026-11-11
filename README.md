@@ -68,9 +68,9 @@ flowchart TB
 * **Bare-Metal Linux Netlink Driver (`nl80211` / `rtnetlink`)**: Communicates directly with the Linux kernel via RFC-compliant Generic Netlink sockets (`AF_NETLINK`) and standard `libc` ioctls (`SIOCGIFFLAGS`, `SIOCSIFFLAGS`, `SIOCGIFINDEX`), eliminating subprocess execution overhead.
 * **Dual-Radio Hardware Auto-Pairing**: Automatically scans the physical USB bus topology via `/sys/class/net`, discovers promiscuous-capable wireless chipsets, and auto-pairs dual adapters into coordinated `[1] SNIFFER` and `[2] INJECTOR` roles.
 * **Katran-Style ARX Cryptographic In-Kernel SYN Cookies**: Bounces 30-bit authenticated SYN-ACKs directly out the wire via `XDP_TX` at line rate without allocating `sk_buff` kernel structures, eliminating TCP SYN flood backlog exhaustion.
-* **Bogon, Martian & Fragmentation Anomaly Wire Drops**: Drops LAND attacks (`saddr == daddr`), Martian sources (`0.0.0.0/8`, `127.0.0.0/8`, `≥ 224.0.0.0`), and RFC 1858 tiny fragments in $<25\text{ns}$ per packet.
-* **Microsecond Bitwise Radix Trie**: Evaluates incoming traffic flows against CIDR quarantine blocks in $<85\text{ns}$.
-* **Single Standalone Static Binary**: Statically linked against Musl libc with zero dynamic C/FFI dependencies. Starts in `<10ms` with $<15\text{MB}$ memory footprint.
+* **Bogon, Martian & Fragmentation Anomaly Wire Drops**: Drops LAND attacks (`saddr == daddr`), Martian sources (`0.0.0.0/8`, `127.0.0.0/8`, `≥ 224.0.0.0`), and RFC 1858 tiny fragments in `< 25ns` per packet.
+* **Microsecond Bitwise Radix Trie**: Evaluates incoming traffic flows against CIDR quarantine blocks in `< 85ns`.
+* **Single Standalone Static Binary**: Statically linked against Musl libc with zero dynamic C/FFI dependencies. Starts in `<10ms` with `< 15MB` memory footprint.
 
 ---
 

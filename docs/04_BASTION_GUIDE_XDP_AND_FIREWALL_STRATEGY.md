@@ -36,7 +36,7 @@ To defeat distributed TCP SYN floods without consuming server memory, Bastion im
 
 ### Mathematical Architecture:
 * **Bits 31..=30 (2-Bit MSS Table)**: Encodes 4 standard TCP Maximum Segment Sizes (`536, 1220, 1360, 1460` bytes), eliminating the out-of-bounds gap of legacy implementations.
-* **Bits 29..=0 (30-Bit ARX Tag)**: Computes a 30-bit cryptographic authentication tag ($2^{30}$ brute-force resistance) using rotating dual-bucket 128-bit secrets (`SynCookieSecret`).
+* **Bits 29..=0 (30-Bit ARX Tag)**: Computes a 30-bit cryptographic authentication tag (`2^30` brute-force resistance) using rotating dual-bucket 128-bit secrets (`SynCookieSecret`).
 * **Line-Rate Reflection (`XDP_TX`)**: When per-source SYN velocity exceeds threshold, the eBPF program:
   1. Truncates TCP options in-place via `bpf_xdp_adjust_tail`.
   2. Swaps Ethernet MACs, IPv4 addresses, and TCP ports.

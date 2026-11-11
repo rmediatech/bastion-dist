@@ -12,9 +12,9 @@ Static timeouts in network scanners either waste time waiting on fast gigabit LA
 
 Bastion implements an **Exponential Weighted Moving Average (EWMA)** RTT estimator:
 
-```math
+$$
 \text{RTT}_{\text{new}} = \frac{7}{8} \text{RTT}_{\text{prev}} + \frac{1}{8} \text{Sample}
-```
+$$
 
 * Calculated entirely in integer microsecond arithmetic.
 * Dynamic timeout threshold scales automatically to `3 * RTT_est`.
@@ -48,7 +48,7 @@ To generate realistic probes and defeat fingerprint-based scanner detection, Bas
 
 Rather than actively transmitting invasive probe bursts that trigger intrusion detection alarms, Bastion's `recon::fingerprint::passive` analyzes inbound traffic non-intrusively:
 
-1. **Initial TTL Recovery**: Evaluates current IP TTL against standard initial baselines ($32, 64, 128, 255$) to reconstruct true hop counts across routed topologies.
+1. **Initial TTL Recovery**: Evaluates current IP TTL against standard initial baselines (`32, 64, 128, 255`) to reconstruct true hop counts across routed topologies.
 2. **TCP Window Size & DF Bit Heuristics**: Distinguishes Linux kernels (`DF=1, Window=64240`), Windows 10/11 (`DF=1, Window=64512 or 65535`), and macOS (`Window=65535`).
 3. **TCP Option Ordering Signatures**: Validates specific option order sequences (`MSS,NOP,WS,SACKOK,TS` vs `MSS,NOP,NOP,SACKOK`).
 
@@ -61,4 +61,4 @@ Untrusted network banners frequently contain malicious ANSI terminal escape sequ
 Bastion passes all external service banners through `scrub_ansi_and_control`:
 * Strips all ANSI CSI (`\x1b[...]`) and OSC (`\x1b]...`) control sequences.
 * Converts unprintable non-ASCII bytes to sanitized hex escapes (`\xHH`).
-* Enforces hard line-length ceilings ($<512$ bytes) to eliminate buffer exhaustion.
+* Enforces hard line-length ceilings (`< 512 bytes`) to eliminate buffer exhaustion.
