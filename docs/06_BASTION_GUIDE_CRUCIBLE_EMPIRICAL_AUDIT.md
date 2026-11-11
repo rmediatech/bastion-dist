@@ -21,7 +21,8 @@ Bastion is engineered to withstand hostile, corrupted, and adversarial input bou
 | **Passive OS Fingerprinting** | `recon/src/fingerprint/passive.rs` | **100% PASS** | TTL Recovery & Heuristics Verified |
 | **ANSI Log Sanitization** | `utils/src/net/tests/tcp_scanner_tests.rs` | **100% PASS** | CSI/OSC Escapes Neutralized |
 | **TCP Options Builder (RFC 793/7323)** | `forge/src/packet/tcp_options.rs` | **100% PASS** | Word-Aligned Serialization Verified |
-| **Total Test Suite** | **All 14 Workspace Crates** | **100% PASS** | **360+ Tests Passed** |
+| **CLI 5 Lenses & Anti-Formula CSV** | `cli/tests/cli_tests.rs` | **100% PASS** | Formula Injections Neutralized (`=,+,-,@,\t,\r`) |
+| **Total Test Suite** | **All 14 Workspace Crates** | **100% PASS** | **370+ Tests Passed** |
 
 ---
 

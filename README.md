@@ -113,24 +113,34 @@ gpg --verify bastion.asc /usr/local/bin/bastion
 ## 🧭 3. Fast Commands
 
 ```bash
-# 1. View active daemon status, hardware interfaces, and Netlink driver binding
-bastion status --json
+# 1. Healthcheck probe verifying daemon socket responsiveness
+bastion ping
 
-# 2. Run high-speed asynchronous local subnet sweep (RFC 5737 / RFC 1918)
-bastion sweep --target 192.0.2.0/24
+# 2. View active firewall drop-counters and telemetry across 5 lenses (1..5)
+bastion status -f tui -l 1               # Compact dashboard card view
+bastion status -f md -l story            # Markdown event narrative
+bastion status -f json                   # Structured JSON
+bastion status -f tui -l waterfall       # ASCII histogram & latency distribution
 
-# 3. Preview active in-kernel XDP packet shield and quarantine rules
-bastion policy preview
+# 3. Impose atomic IP/CIDR block rule in in-kernel eBPF drop map
+bastion block --ip 198.51.100.42
 
-# 4. Add dynamic CIDR quarantine block to in-kernel eBPF drop map
-sudo bastion policy block --cidr 198.51.100.0/24 --reason "Hostile SYN flood"
+# 4. Remove block rule and pardon target
+bastion unblock --ip 198.51.100.42
 
-# 5. Remove CIDR block from quarantine
-sudo bastion policy unblock --cidr 198.51.100.0/24
+# 5. Fetch fixture-backed host policy recommendations (Anti-Formula Injection protected)
+bastion policy-preset -f csv
 
-# 6. Execute high-speed adaptive EWMA port scan with ANSI log scrubbing
-bastion scan --target 192.0.2.1 --ports 1-1024 --adaptive-rtt
+# 6. Interactive offline help and full UNIX manual page
+bastion help                             # Interactive topic directory
+bastion help lenses                      # Deep dive into the 5 operational lenses
+bastion man                              # Full UNIX man page rendered via $PAGER
 ```
+
+### 4 Interchange Formats & 5 Operational Lenses
+Bastion supports universal structured projections across all query and telemetry operations:
+* **Formats (`-f, --format`)**: `tui` (ANSI High-Contrast), `md` (GitHub-Flavored Markdown), `json` (Zero-Alloc Structured JSON), `csv` (Spreadsheet-ready with hardened anti-formula injection shielding against `=,+,-,@,\t,\r`).
+* **Lenses (`-l, --lens`)**: `1 | grid` (Card metrics), `2 | story` (Chronological narrative), `3 | tree` (Subsystem hierarchy), `4 | spec` (Parameter audit), `5 | waterfall` (Distribution bar chart).
 
 ---
 

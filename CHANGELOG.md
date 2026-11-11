@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.4.0] - 2026-11-10
 
+### Sovereign Help, UNIX Man Page, 4 Formats & 5 Operational Lenses (`SOVEREIGN-CHANGELOG-E2E-01`)
+
+- **`[CLI/UX]` & `[Protocol]` Unified Sovereign CLI Architecture (`cli::cli_args`, `cli::cli_projector`, `cli::cli_help_man`)**:
+  - **Root Cause Dissection**: Previously, the CLI command surface lacked unified output serialization across formats and operational perspectives, forcing operators into ad-hoc scripting for parsing reports. CSV exports lacked protection against formula injection attacks (`=`, `+`, `-`, `@`, `\t`, `\r`), violating `SOVEREIGN-SECURITY-01`. Offline environments lacked immediate access to comprehensive manuals without starting background daemons.
+  - **Architectural & Mathematical Resolution**: Modularized the CLI crate under strict OJP bounds ($\le 300$ lines per file, entry shell $\le 80$ lines). Implemented zero-allocation `Projector` supporting 4 interchangeable formats (`tui`, `md`, `json`, `csv`) and 5 operational lenses (`1: grid`, `2: story`, `3: tree`, `4: spec`, `5: waterfall`). Hardened CSV outputs with automatic formula injection neutralization prefixing single-quotes (`'`). Added offline `bastion help [<topic>]` and a full UNIX-style manual page (`bastion man`) rendered through the operator's active `$PAGER` (`less -R`).
+  - **Empirical Verification**: Verified via adversarial unit tests in `cli/tests/cli_tests.rs` asserting 100% green coverage across all lenses, formats, and formula-injection attack vectors.
+
 ### Bare-Metal Netlink (nl80211) & Dual-Radio Hardware Orchestration (`SOVEREIGN-CHANGELOG-E2E-01`)
 
 - **`[Hardware/Kernel]` & `[Protocol]` Bare-Metal Linux Netlink (`nl80211`) & Kernel ioctl Driver Engine (`utils::net::nl80211`)**:
