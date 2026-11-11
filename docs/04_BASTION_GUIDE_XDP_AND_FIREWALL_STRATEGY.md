@@ -17,7 +17,7 @@ Under a multi-gigabit TCP SYN flood or volumetric UDP attack, the CPU spends 100
 
 **Bastion's In-Kernel XDP Ingress Hook**:
 * Intercepts packets directly at the network interface card (NIC) driver layer before the kernel allocates `sk_buff`.
-* Evaluates rules in $<25\text{ns}$ per packet.
+* Evaluates rules in `< 25ns` per packet.
 * Drops hostile packets via `XDP_DROP` or bounces SYN-ACK challenges via `XDP_TX` at line rate.
 
 ---
@@ -57,9 +57,9 @@ Before any packet reaches TCP evaluation, Bastion applies zero-branching bitwise
 
 ### B. IPv4 Fragmentation Anomaly Neutralization
 * **Contradictory `DF + MF` Flags**: Dropped.
-* **RFC 1858 Tiny Initial Fragments**: Initial fragments with `offset == 0 && MF == 1` but total length $< 48$ bytes (hiding L4 port headers) are dropped immediately.
-* **Teardrop Overlapping Offsets**: Non-zero fragment offsets with $0 < \text{offset} \times 8 < 24$ dropped.
-* **Ping-of-Death Reassembly Overflow**: Fragments where $\text{offset} \times 8 + \text{payload} > 65535$ dropped.
+* **RFC 1858 Tiny Initial Fragments**: Initial fragments with `offset == 0 && MF == 1` but total length `< 48` bytes (hiding L4 port headers) are dropped immediately.
+* **Teardrop Overlapping Offsets**: Non-zero fragment offsets with `0 < (offset * 8) < 24` dropped.
+* **Ping-of-Death Reassembly Overflow**: Fragments where `(offset * 8) + payload > 65535` dropped.
 
 ### C. Volumetric UDP & ICMP Flood Limiting
 * Enforces a sliding 1-second decay window (`VOLUMETRIC_WINDOW_NS = 1_000_000_000`).

@@ -15,7 +15,7 @@ flowchart TB
     subgraph ControlPlane["User & Control Plane (Zero Allocation)"]
         CLI["CLI Control Utility ('bastion')"]
         UDS["Local Unix Domain Socket (/run/bastion/bastion.sock)"]
-        CLI -->|Non-blocking JSON Commands| UDS
+        CLI -->|"Non-blocking JSON Commands"| UDS
     end
 
     subgraph DaemonPlane["Daemon Coordinator Plane (Safe Rust)"]
@@ -27,9 +27,9 @@ flowchart TB
     end
 
     subgraph KernelPlane["Kernel & Silicon Wire Plane (Ring 0 / Bare Metal)"]
-        DAEMON -->|AF_NETLINK (Family 16)| NL80211["Linux Generic Netlink (nl80211)"]
-        DAEMON -->|libc ioctl (SIOCGIFFLAGS)| IOCTL["Linux Link Control"]
-        DAEMON -->|eBPF / XDP Ingress Hook| XDP["Katran ARX SYN Cookie Reflector"]
+        DAEMON -->|"AF_NETLINK (Family 16)"| NL80211["Linux Generic Netlink (nl80211)"]
+        DAEMON -->|"libc ioctl (SIOCGIFFLAGS)"| IOCTL["Linux Link Control"]
+        DAEMON -->|"eBPF / XDP Ingress Hook"| XDP["Katran ARX SYN Cookie Reflector"]
         XDP --> NIC["Physical Network Interface Controller (NIC)"]
         NL80211 --> NIC
         IOCTL --> NIC

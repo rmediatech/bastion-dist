@@ -11,9 +11,13 @@
 Static timeouts in network scanners either waste time waiting on fast gigabit LANs or drop probes prematurely on congested WAN links.
 
 Bastion implements an **Exponential Weighted Moving Average (EWMA)** RTT estimator:
-$$\text{RTT}_{\text{new}} = \frac{7}{8} \text{RTT}_{\text{prev}} + \frac{1}{8} \text{Sample}$$
+
+```math
+\text{RTT}_{\text{new}} = \frac{7}{8} \text{RTT}_{\text{prev}} + \frac{1}{8} \text{Sample}
+```
+
 * Calculated entirely in integer microsecond arithmetic.
-* Dynamic timeout threshold scales automatically to $3 \times \text{RTT}_{\text{est}}$.
+* Dynamic timeout threshold scales automatically to `3 * RTT_est`.
 * Adapts in real time to network congestion, dropping scan completion times by over 80% without losing probe fidelity.
 
 ---
