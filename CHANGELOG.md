@@ -23,13 +23,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Architectural & Mathematical Resolution**: Engineered a zero-dependency, bare-metal Netlink and ioctl engine in `utils::net::nl80211`. Implemented direct Linux Generic Netlink (`AF_NETLINK` family `NETLINK_GENERIC`) controller family resolution (`GENL_ID_CTRL` = 16) for `nl80211` (`NL80211_CMD_SET_INTERFACE` = 6, `NL80211_CMD_SET_CHANNEL` = 65, `NL80211_ATTR_WIPHY_FREQ` = 38). Engineered `LinkControl` utilizing direct libc ioctls (`SIOCGIFFLAGS`, `SIOCSIFFLAGS`, `SIOCGIFINDEX`) for sub-microsecond link UP/DOWN and promiscuous mode toggling. Added multi-band center frequency translation across 2.4 GHz (1-14) and 5 GHz (UNII-1/UNII-3).
   - **Empirical Verification**: Verified via unit tests (`test_controller_initialization`, `test_channel_to_frequency_2ghz`, `test_channel_to_frequency_5ghz`, `test_loopback_ifindex_and_up`, `test_socket_open_and_family_lookup`) and empirical execution on standard 802.11 monitor-capable hardware.
 
-- **`[Hardware/RF]` Intelligent Dual-Radio Auto-Pairing & Hardware Identification (`utils::net::nl80211::sysfs`, `strike_lab::interface_selector`)**:
+- **`[Hardware/RF]` Intelligent Dual-Radio Auto-Pairing & Hardware Identification (`utils::net::nl80211::sysfs`, `airspace_lab::interface_selector`)**:
   - **Root Cause Dissection**: Hardware radio selection previously required manual user input or blind array indexing, risking selection of internal motherboard Wi-Fi instead of high-gain external USB adapters.
   - **Architectural & Mathematical Resolution**: Implemented `SysfsDiscovery` directly traversing `/sys/class/net/` and USB device descriptor paths to detect hardware chipsets across vendor IDs and product descriptors. Implemented `auto_pair_dual_adapters()` prioritizing external dedicated radios over onboard PCIe Wi-Fi, automatically pre-configuring `[1] SNIFFER` for continuous zero-drop capture and `[2] INJECTOR` for targeted transmission.
   - **Empirical Verification**: Empirically verified in isolated test harness (`tests/live_wifi_tests.rs::test_live_sysfs_auto_pair_dual_adapters`), accurately classifying `wlan1` and `wlan2` as dedicated external adapters while segregating `wlan0` onboard Wi-Fi.
 
-- **`[Crucible/Refactor]` Workspace-Wide Subprocess Eradication & Strict Line Bound Conformance (`utils`, `strike_lab`, `daemon`)**:
-  - **Root Cause Dissection**: Monolithic files in `utils/src/net/sniffer.rs`, `strike_lab/src/bin/poc_strike.rs`, and `daemon/src/main.rs` exceeded the 300-line modularity bound and retained legacy subprocess calls (`Command::new("kill")`, `Command::new("iw")`).
+- **`[Crucible/Refactor]` Workspace-Wide Subprocess Eradication & Strict Line Bound Conformance (`utils`, `airspace_lab`, `daemon`)**:
+  - **Root Cause Dissection**: Monolithic files in `utils/src/net/sniffer.rs`, `airspace_lab/src/bin/poc_strike.rs`, and `daemon/src/main.rs` exceeded the 300-line modularity bound and retained legacy subprocess calls (`Command::new("kill")`, `Command::new("iw")`).
   - **Architectural & Mathematical Resolution**: Purged all subprocess spawns from `sniffer.rs`, `adapter.rs`, `interfaces.rs`, `guard.rs`, and `target_scanner.rs`. Replaced `daemon/src/main.rs` process termination with direct `libc::kill` syscalls (SIGTERM/SIGKILL). Bounded all touched files strictly under 300 lines (`daemon/src/main.rs`: 296 lines, `sniffer.rs`: 198 lines, `poc_strike.rs`: 228 lines, `dashboard.rs`: 245 lines).
   - **Empirical Verification**: 100% green test suite across all 14 workspace crates (360+ tests passed).
 
@@ -59,10 +59,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Architectural & Mathematical Resolution**: Created `TcpOptionsBuilder` supporting MSS, Window Scale, SACK Permitted, Timestamps, and NOPs, with automatic padding to 32-bit word alignment.
   - **Empirical Verification**: Verified via `forge/src/packet/tcp_options.rs` (`test_tcp_options_mss_and_sack_aligned` and `test_tcp_options_standard_syn_pack`).
 
-- **`[Hardware/RF]` IEEE 802.11w-2009 Protected Management Frames (PMF) Inspector (`strike::wifi::pmf`)**:
+- **`[Hardware/RF]` IEEE 802.11w-2009 Protected Management Frames (PMF) Inspector (`airspace::wifi::pmf`)**:
   - **Root Cause Dissection**: Wireless interdiction tools blindly injected deauthentication frames against modern WPA3/802.11w networks where Management Frame Protection (MFP) cryptographically authenticates frames, resulting in wasted transmissions.
   - **Architectural & Mathematical Resolution**: Engineered `parse_rsn_pmf_status` parsing the 802.11 RSN Information Element (Tag 48) to extract MFPR (Bit 6) and MFPC (Bit 7), classifying target BSSIDs into `Required`, `Capable`, or `Disabled`.
-  - **Empirical Verification**: Verified via `strike/src/wifi/pmf.rs` (`test_pmf_required_detection`, `test_pmf_capable_optional_detection`, and `test_pmf_disabled_or_empty_detection`).
+  - **Empirical Verification**: Verified via `airspace/src/wifi/pmf.rs` (`test_pmf_required_detection`, `test_pmf_capable_optional_detection`, and `test_pmf_disabled_or_empty_detection`).
 
 ---
 
