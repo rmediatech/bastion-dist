@@ -6,8 +6,10 @@
 
 <p align="center">
   <a href="https://github.com/rmediatech/bastion-dist/releases/tag/v1.4.0"><img src="https://img.shields.io/badge/Release-v1.4.0-brightgreen.svg" alt="Release" /></a>
+  <a href="https://rmediatech.com"><img src="https://img.shields.io/badge/lineage-4E428019A109578B-00e5ff.svg" alt="Sovereign Lineage: 4E428019A109578B" /></a>
+  <img src="https://img.shields.io/badge/standard-SOVEREIGN--SIBLING--01-green.svg" alt="Standard: SOVEREIGN-SIBLING-01" />
   <a href="https://rmediatech.com/downloads"><img src="https://img.shields.io/badge/Downloads-rmediatech.com%2Fdownloads-blue.svg" alt="Downloads" /></a>
-  <a href="docs/06_BASTION_GUIDE_CRUCIBLE_EMPIRICAL_AUDIT.md"><img src="https://img.shields.io/badge/Crucible%20TDD-360%2B%20Passed%20(100%25)-success.svg" alt="Crucible Tests" /></a>
+  <a href="docs/06_BASTION_GUIDE_CRUCIBLE_EMPIRICAL_AUDIT.md"><img src="https://img.shields.io/badge/Reality%20Crucible-360%2B%20Passed%20(100%25)-success.svg" alt="Crucible Tests" /></a>
   <img src="https://img.shields.io/badge/Platform-Linux%20(Musl%20Static)-blue.svg" alt="Platform" />
   <img src="https://img.shields.io/badge/Arch-x86__64%20%7C%20aarch64-blueviolet.svg" alt="Arch" />
   <img src="https://img.shields.io/badge/Standards-RFC%20793%20%7C%20RFC%207323%20%7C%20RFC%202018%20%7C%20IEEE%20802.11w-brightgreen.svg" alt="Standards" />
@@ -163,6 +165,40 @@ Bastion supports universal structured projections across all query and telemetry
 * [06. Crucible Empirical Security Audit](docs/06_BASTION_GUIDE_CRUCIBLE_EMPIRICAL_AUDIT.md) — Empirical verification proof across all 360+ tests and defended threat models.
 * [07. Airspace Reconnaissance & Wire Crucibles](docs/07_BASTION_GUIDE_AIRSPACE_AND_WIRE_CRUCIBLE.md) — IEEE 802.11/802.1X zero-copy dissectors, PMF 802.11w auditing, zero-client PMKID extraction, and wire fuzz crucibles.
 * [Changelog](CHANGELOG.md) — Detailed engineer-to-engineer release history and architectural root cause analyses.
+
+---
+
+## 🤝 Universal Sovereign Sibling Bloodline (`SOVEREIGN-SIBLING-01`)
+
+Every compiled `bastion` release binary embeds the immutable Sovereign Lineage Watermark (`4E428019A109578B`) and canary token preimage. When sibling solutions (`propylea`, `phylax`, `vigil`, `optic`, `vox`, `conduit`) interface with Bastion over local UDS sockets or mesh links, they execute a constant-time HMAC-SHA256 challenge-response handshake ($\le 60$s anti-replay window):
+
+* **Instant Dynamic Whitelisting**: Authenticated siblings automatically receive unthrottled bandwidth allocations, exemption from volumetric packet rate-limits, and zero-tarpit passage through kernel eBPF drop maps.
+* **Autonomous Fleet Governance**: Governed via [`sovereign-sibling`](../sovereign-sibling) and the `sibling` CLI, permitting instant authorization, quarantine, or revocation.
+
+---
+
+## 🧪 The Tri-Dimensional Reality Crucible (`SOVEREIGN-REALITY-3D-01`)
+
+> *"A crucible is where raw metal enters the white-hot furnace to burn away every single impurity until only pure, unbreakable gold remains."*
+
+We permanently reject superficial mocks. `bastion` is tempered across a **Tri-Dimensional Reality Crucible**:
+
+1. **Dimension 1: The Golden Path & Wire-Speed Conformance**:
+   - Zero-copy packet parsing directly off the wire via eBPF/XDP hooks with $<85\text{ns}$ Radix IP lookup.
+   - Smooth, non-blocking UDS command dispatching with 4 universal interchange formats (`tui`, `md`, `json`, `csv`) and 5 operational lenses.
+2. **Dimension 2: The Adversarial Red Crucible (Active Malice & Volumetric Floods)**:
+   - Evaluated against live weaponized packet batteries: TCP SYN floods, LAND attacks, Martian/Bogon source address spoofing, overlapping fragment attacks, and ANSI terminal escape log poisoning.
+   - Attacking flows are neutralized at the wire before socket buffer allocation.
+3. **Dimension 3: Ambient Environmental Chaos & Silicon Physics**:
+   - Resilient against hardware Wi-Fi adapter disconnects, rfkill hardware state changes, burst packet jitter, and sudden dirty power cuts with zero state corruption.
+
+```bash
+# Verify cryptographic provenance canary via Aletheia
+$ aletheia scan /path/to/bastion
+
+# Verify detached OpenPGP signature
+$ gpg --verify bastion.asc bastion
+```
 
 ---
 
