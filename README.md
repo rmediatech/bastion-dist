@@ -5,7 +5,7 @@
 <h1 align="center">BASTION (`bastion-dist`) — Sovereign Microsecond Firewall & Wire-Speed Packet Shield</h1>
 
 <p align="center">
-  <a href="https://github.com/rmediatech/bastion-dist/releases/tag/v1.4.0"><img src="https://img.shields.io/badge/Release-v1.4.0-brightgreen.svg" alt="Release" /></a>
+  <a href="https://github.com/rmediatech/bastion-dist/releases/tag/v1.5.0"><img src="https://img.shields.io/badge/Release-v1.5.0-brightgreen.svg" alt="Release" /></a>
   <a href="https://rmediatech.com"><img src="https://img.shields.io/badge/lineage-4E428019A109578B-00e5ff.svg" alt="Sovereign Lineage: 4E428019A109578B" /></a>
   <img src="https://img.shields.io/badge/standard-SOVEREIGN--SIBLING--01-green.svg" alt="Standard: SOVEREIGN-SIBLING-01" />
   <a href="https://rmediatech.com/downloads"><img src="https://img.shields.io/badge/Downloads-rmediatech.com%2Fdownloads-blue.svg" alt="Downloads" /></a>
